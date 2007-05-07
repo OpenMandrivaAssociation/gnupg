@@ -50,8 +50,8 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %configure2_5x \
 	--with-included-gettext \
 	--with-static-rnd=linux \
-%ifarch sparc sparc64
-	--enable-m-guard \
+%ifarch %{sunsparc}
+	--enable-m-guard
 %else
 	--disable-m-guard
 %endif
