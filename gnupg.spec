@@ -16,8 +16,8 @@ Patch4:		gnupg-1.4.5-ppc64.patch
 Patch6:		gnupg-1.4.7-deb-free_caps.patch
 Patch7:		gnupg-1.4.7-deb-manpage.patch
 Patch8:		gnupg-1.4.7-deb-min_privileges.patch
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
+Requires(post): info-install
+Requires(preun): info-install
 BuildRequires:	bzip2-devel
 BuildRequires:	docbook-utils
 BuildRequires:	gettext
