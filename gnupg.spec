@@ -98,7 +98,7 @@ rm -rf %{buildroot}
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc README NEWS THANKS TODO ChangeLog doc/DETAILS doc/FAQ doc/HACKING
-%doc doc/faq.html doc/faq.raw doc/OpenPGP doc/samplekeys.asc
+%doc doc/faq.html doc/OpenPGP doc/samplekeys.asc
 %doc doc/gpgv.texi
 %attr(4755,root,root) %{_bindir}/gpg
 %attr(0755,root,root) %{_bindir}/gpgv
