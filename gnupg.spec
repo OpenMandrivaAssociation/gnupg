@@ -28,7 +28,6 @@ BuildRequires:	openldap-devel
 BuildRequires:	perl
 BuildRequires:	readline-devel
 BuildRequires:	sendmail-command
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.
