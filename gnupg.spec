@@ -1,8 +1,8 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	1.4.8
-Release:	%mkrel 1
-License:	GPL
+Release:	%mkrel 2
+License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
 Source:		ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2
@@ -28,6 +28,7 @@ BuildRequires:	openldap-devel
 BuildRequires:	perl
 BuildRequires:	readline-devel
 BuildRequires:	sendmail-command
+BuildRequires:	bison
 BuildRoot:	%{_tmppath}/%{name}-buildroot
 
 %description
@@ -45,12 +46,16 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %patch7 -p1 -b .manpage
 %patch8 -p1 -b .min_privileges
 
-
 %build
 %serverbuild
 %configure2_5x \
-	--with-included-gettext \
+	--without-included-regex \
+	--without-included-gettext \
+	--without-included-zlib \
 	--with-static-rnd=linux \
+	--disable-rpath \
+	--with-capabilities \
+	--enable-noexecstack \
 %ifarch %{sunsparc}
 	--enable-m-guard
 %else
@@ -117,6 +122,3 @@ rm -rf %{buildroot}
 %{_infodir}/gnupg1.info*
 %dir %{_sysconfdir}/RPM-GPG-KEYS
 %attr(0644,root,root) %{_sysconfdir}/RPM-GPG-KEYS/*.asc
-
-
-
