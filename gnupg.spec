@@ -1,7 +1,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	1.4.8
-Release:	%mkrel 2
+Version:	1.4.9
+Release:	%mkrel 1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -29,7 +29,7 @@ BuildRequires:	perl
 BuildRequires:	readline-devel
 BuildRequires:	sendmail-command
 BuildRequires:	bison
-BuildRoot:	%{_tmppath}/%{name}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.
@@ -38,6 +38,7 @@ It includes an advanced key management facility and is compliant
 with the proposed OpenPGP Internet standard as described in RFC2440.
 
 %prep
+
 %setup -q
 %patch1 -p0 -b .use_agent
 %patch2 -p1 -b .cve-2006-3082
