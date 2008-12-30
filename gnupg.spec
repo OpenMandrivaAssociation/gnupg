@@ -1,7 +1,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	1.4.9
-Release:	%mkrel 5
+Release:	%mkrel 6
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -10,7 +10,6 @@ Source1:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2.sig
 Source2:	mdk-keys.tar.bz2
 Source3:	mdk-keys.tar.bz2.sig
 Patch1:		gnupg-1.4.2.2-use-agent-by-default.diff
-Patch2:		gnupg-1.4.2.2-CVE-2006-3082.patch
 Patch4:		gnupg-1.4.5-ppc64.patch
 # splitted off from the previous debian patch
 Patch6:		gnupg-1.4.7-deb-free_caps.patch
@@ -20,6 +19,7 @@ Patch9:		gnupg-1.4.9-gcc43.diff
 Patch10:	gnupg-1.4.6-dir.patch
 Requires(post): info-install
 Requires(preun): info-install
+BuildRequires:	cap-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	docbook-utils
 BuildRequires:	gettext
@@ -43,7 +43,6 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 
 %setup -q
 %patch1 -p0 -b .use_agent
-%patch2 -p1 -b .cve-2006-3082
 %patch4 -p1 -b .ppc64
 %patch6 -p1 -b .free_caps
 %patch7 -p1 -b .manpage
