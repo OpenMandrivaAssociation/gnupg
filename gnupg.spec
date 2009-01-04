@@ -1,7 +1,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	1.4.9
-Release:	%mkrel 6
+Release:	%mkrel 7
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -19,7 +19,6 @@ Patch9:		gnupg-1.4.9-gcc43.diff
 Patch10:	gnupg-1.4.6-dir.patch
 Requires(post): info-install
 Requires(preun): info-install
-BuildRequires:	cap-devel
 BuildRequires:	bzip2-devel
 BuildRequires:	docbook-utils
 BuildRequires:	gettext
@@ -58,7 +57,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 	--without-included-zlib \
 	--with-static-rnd=linux \
 	--disable-rpath \
-	--with-capabilities \
+	--without-capabilities \
 	--enable-noexecstack \
 %ifarch %{sunsparc}
 	--enable-m-guard
