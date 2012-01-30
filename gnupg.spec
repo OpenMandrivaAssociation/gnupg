@@ -1,7 +1,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	1.4.11
-Release:	%mkrel 2
+Version:	1.4.12
+Release:	%mkrel 1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -15,7 +15,6 @@ Patch4:		gnupg-1.4.5-ppc64.patch
 Patch6:		gnupg-1.4.7-deb-free_caps.patch
 Patch7:		gnupg-1.4.7-deb-manpage.patch
 Patch8:		gnupg-1.4.7-deb-min_privileges.patch
-#Patch10:	gnupg-1.4.6-dir.patch
 Requires(post): info-install
 Requires(preun): info-install
 BuildRequires:	bzip2-devel
@@ -45,7 +44,6 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %patch6 -p1 -b .free_caps
 %patch7 -p1 -b .manpage
 %patch8 -p1 -b .min_privileges
-#%patch10 -p1 -b .dir
 
 %build
 %serverbuild
