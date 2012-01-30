@@ -21,7 +21,7 @@ BuildRequires:	bzip2-devel
 BuildRequires:	docbook-utils
 BuildRequires:	gettext
 BuildRequires:	libcurl-devel >= 7.10
-BuildRequires:	libtermcap-devel
+BuildRequires:	%{_lib}termcap-devel
 BuildRequires:	libusb-devel
 BuildRequires:	openldap-devel
 BuildRequires:	perl
