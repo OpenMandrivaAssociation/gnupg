@@ -1,0 +1,93 @@
+--- gnupg-1.4.3.orig/debian/gpg-convert-from-106.1
++++ gnupg-1.4.3/debian/gpg-convert-from-106.1
+@@ -0,0 +1,21 @@
++.TH "gpg-convert-from-106" 1 "December 2005" 
++
++.SH NAME
++gpg-convert-from-106 \- converts your public keyring and trustdb from GnuPG
++1.0.6 to later formats.
++
++.SH SYNOPSIS
++.B gpg-convert-from-106
++
++
++.SH DESCRIPTION
++.B gpg-convert-from-106
++converts your public keyring and trustdb from GnuPG 1.0.6 or earlier to the
++1.0.7 and later format.
++
++.SH AUTHOR
++Copyright (C) 2002 Free Software Foundation, Inc. Please report bugs to
++<bug-gnupg@gnu.org>.
++
++This manpage was written by Francois Wendling <frwendling@free.fr>.
++
+--- gnupg-1.4.3.orig/debian/gpgsplit.1
++++ gnupg-1.4.3/debian/gpgsplit.1
+@@ -0,0 +1,41 @@
++.TH "gpgsplit" 1 "December 2005" 
++
++.SH NAME
++gpgsplit \- Split an OpenPGP message into packets
++
++.SH SYNOPSIS
++.B gpgsplit 
++.RI [ OPTIONS ]
++.RI [ FILES ]
++
++.SH DESCRIPTION
++This manual page documents briefly the 
++.B gpgsplit
++command.
++.PP
++.B gpgsplit
++splits an OpenPGP message into packets.
++
++.SH OPTIONS
++.TP
++.BR \-v , \-\-verbose
++Verbose.
++.TP
++.BR \-p , "\-\-prefix " \fISTRING\fR
++Prepend filenames with \fISTRING\fR.
++.TP
++.B \-\-uncompress
++Uncompress a packet.
++.TP
++.B \-\-secret\-to\-public
++Convert secret keys to public keys.
++.TP
++.B \-\-no\-split
++Write to stdout and don't actually split.
++
++.SH AUTHOR
++Copyright (C) 2002 Free Software Foundation, Inc. Please report bugs to
++<bug-gnupg@gnu.org>.
++
++This manpage was written by Francois Wendling <frwendling@free.fr>.
++
+--- gnupg-1.4.3.orig/debian/lspgpot.1
++++ gnupg-1.4.3/debian/lspgpot.1
+@@ -0,0 +1,22 @@
++.TH "lspgpot" 1 "December 2005" 
++
++.SH NAME
++lspgpot - extracts the ownertrust values from PGP keyrings and list them in
++GnuPG ownertrust format.
++
++
++.SH SYNOPSIS
++.B lspgpot
++
++
++.SH DESCRIPTION
++.B lspgpot
++extracts the ownertrust values from PGP keyrings and list them in
++GnuPG ownertrust format.
++
++.SH AUTHOR
++Copyright (C) 2002 Free Software Foundation, Inc. Please report bugs to
++<bug-gnupg@gnu.org>.
++
++This manpage was written by Francois Wendling <frwendling@free.fr>.
++

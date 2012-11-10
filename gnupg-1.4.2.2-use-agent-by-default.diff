@@ -1,0 +1,11 @@
+--- g10/options.skel	2006-02-14 11:10:17.000000000 +0100
++++ g10/options.skel.oden	2006-06-21 10:25:40.000000000 +0200
+@@ -198,7 +198,7 @@
+ # at ftp.gnupg.org/gcrypt/alpha/aegypten/).  To make use of the agent,
+ # you have to run an agent as daemon and use the option
+ #
+-# use-agent
++use-agent
+ # 
+ # which tries to use the agent but will fallback to the regular mode
+ # if there is a problem connecting to the agent.  The normal way to
