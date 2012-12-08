@@ -1,5 +1,3 @@
 sources:
-  "gnupg-1.4.12.tar.bz2:"	9b78e20328d35525af7b8a9c1cf081396910e937
-  "gnupg-1.4.12.tar.bz2.sig:"	1554171bc6e0926638cb531760dd660608fb0eeb
-  "mdk-keys.tar.bz2:"	8438030765d5ac9031ce5958dd357815f25194ea
-  "mdk-keys.tar.bz2.sig:"	0279ae3cd793a8d8f5bd3ff3e173828becabc6cd
+  "gnupg-1.4.11.tar.bz2": 78e22f5cca88514ee71034aafff539c33f3c6676
+  "mdk-keys.tar.bz2": 8438030765d5ac9031ce5958dd357815f25194ea
