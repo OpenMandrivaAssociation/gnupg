@@ -42,7 +42,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %patch6 -p1 -b .free_caps
 %patch7 -p1 -b .manpage
 %patch8 -p1 -b .min_privileges
-#%patch10 -p1 -b .dir
+#patch10 -p1 -b .dir
 
 %build
 %serverbuild
