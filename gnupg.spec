@@ -20,7 +20,7 @@ BuildRequires:	bzip2-devel
 BuildRequires:	docbook-utils
 BuildRequires:	gettext
 BuildRequires:	libcurl-devel >= 7.10
-BuildRequires:	termcap-devel
+BuildRequires:	pkgconfig(ncursesw)
 BuildRequires:	libusb-devel
 BuildRequires:	openldap-devel
 BuildRequires:	perl
