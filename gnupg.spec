@@ -1,3 +1,5 @@
+%bcond_without	openldap
+
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	1.4.13
@@ -5,7 +7,7 @@ Release:	3
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
-Source:		ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2
 Source1:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2.sig
 Source2:	mdk-keys.tar.bz2
 Source3:	mdk-keys.tar.bz2.sig
@@ -22,7 +24,9 @@ BuildRequires:	gettext
 BuildRequires:	libcurl-devel >= 7.10
 BuildRequires:	pkgconfig(ncursesw)
 BuildRequires:	libusb-devel
+%if %{with openldap}
 BuildRequires:	openldap-devel
+%endif
 BuildRequires:	perl
 BuildRequires:	readline-devel
 BuildRequires:	sendmail-command
@@ -66,8 +70,6 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 make check
 
 %install
-rm -rf %{buildroot}
-
 %makeinstall_std
 
 sed -e "s#../g10/gpg#gpg#" < tools/lspgpot > %{buildroot}%{_bindir}/lspgpot
@@ -87,9 +89,7 @@ tar xvjf %{SOURCE2} -C %{buildroot}%{_sysconfdir}/RPM-GPG-KEYS
 
 %{find_lang} %{name}
 
-
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc README NEWS THANKS TODO doc/DETAILS doc/FAQ doc/HACKING
 %doc doc/OpenPGP doc/samplekeys.asc
 %doc doc/gpgv.texi
@@ -102,7 +102,9 @@ tar xvjf %{SOURCE2} -C %{buildroot}%{_sysconfdir}/RPM-GPG-KEYS
 %attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_curl
 %attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_finger
 %attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_hkp
+%if %{with openldap}
 %attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_ldap
+%endif
 %dir %{_datadir}/gnupg
 %{_datadir}/gnupg/options.skel
 %{_mandir}/man1/*
