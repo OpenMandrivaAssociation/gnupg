@@ -1,7 +1,16 @@
 diff --git a/Makefile.am b/Makefile.am
-index 05917a0..a4f5920 100644
+index 05917a0..18677c5 100644
 --- a/Makefile.am
 +++ b/Makefile.am
+@@ -29,7 +29,7 @@ GITLOG_TO_CHANGELOG=gitlog-to-changelog
+ if CROSS_COMPILING
+ checks =
+ else
+-checks = checks
++checks = 
+ endif
+ 
+ if HAVE_W32_SYSTEM
 @@ -39,7 +39,7 @@ bzlib =
  endif
  
