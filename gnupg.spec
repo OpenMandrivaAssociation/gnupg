@@ -17,6 +17,7 @@ Patch4:		gnupg-1.4.5-ppc64.patch
 Patch6:		gnupg-1.4.7-deb-free_caps.patch
 Patch7:		gnupg-1.4.7-deb-manpage.patch
 Patch8:		gnupg-1.4.7-deb-min_privileges.patch
+Patch9:		gnupg-1.4.16-disable-check-aarch64.patch
 
 BuildRequires:	bison
 BuildRequires:	docbook-utils
@@ -39,7 +40,14 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 
 %prep
 %setup -q
-%apply_patches
+%patch1 -p1
+%patch4 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%ifarch aarch64
+%patch9 -p1
+%endif
 
 %build
 %serverbuild
