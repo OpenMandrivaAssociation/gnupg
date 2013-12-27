@@ -21,7 +21,7 @@ index 05917a0..18677c5 100644
  EXTRA_DIST = scripts/config.rpath PROJECTS BUGS config.h.in	\
               autogen.sh ChangeLog-2011 po/ChangeLog-2011	\
 diff --git a/Makefile.in b/Makefile.in
-index 353d2d8..78690dd 100644
+index 353d2d8..a82613e 100644
 --- a/Makefile.in
 +++ b/Makefile.in
 @@ -130,7 +130,7 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
@@ -33,3 +33,12 @@ index 353d2d8..78690dd 100644
  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
  distdir = $(PACKAGE)-$(VERSION)
  top_distdir = $(distdir)
+@@ -363,7 +363,7 @@ GITLOG_TO_CHANGELOG = gitlog-to-changelog
+ @HAVE_W32_SYSTEM_FALSE@bzlib = 
+ @HAVE_W32_SYSTEM_TRUE@bzlib = bzlib
+ SUBDIRS = m4 intl zlib ${bzlib} util mpi cipher tools \
+-          g10 keyserver po doc ${checks}
++          g10 keyserver po doc
+ 
+ EXTRA_DIST = scripts/config.rpath PROJECTS BUGS config.h.in	\
+              autogen.sh ChangeLog-2011 po/ChangeLog-2011	\
