@@ -11,3 +11,16 @@ index 05917a0..a4f5920 100644
  
  EXTRA_DIST = scripts/config.rpath PROJECTS BUGS config.h.in	\
               autogen.sh ChangeLog-2011 po/ChangeLog-2011	\
+diff --git a/Makefile.in b/Makefile.in
+index 353d2d8..78690dd 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -130,7 +130,7 @@ AM_RECURSIVE_TARGETS = $(RECURSIVE_TARGETS:-recursive=) \
+ ETAGS = etags
+ CTAGS = ctags
+ DIST_SUBDIRS = m4 intl zlib bzlib util mpi cipher tools g10 keyserver \
+-	po doc checks
++	po doc
+ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
+ distdir = $(PACKAGE)-$(VERSION)
+ top_distdir = $(distdir)
