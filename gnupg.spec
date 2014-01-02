@@ -83,9 +83,9 @@ install %{SOURCE4} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
 ln -s gpg2 %{buildroot}%{_bindir}/gpg
 ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 
-%find_lang %{name}
+%find_lang %{name}2
 
-%files -f %{name}.lang
+%files -f %{name}2.lang
 %defattr(-,root,root)
 %doc README NEWS THANKS TODO ChangeLog
 %doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS 
