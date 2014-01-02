@@ -1,0 +1,21 @@
+# Please comment if you don't want start the gpg-agent then somebody (process 
+# or person) start a new shell or X session. Write "yes" to start.
+START_GPGAGENT="yes"
+# Same option but only in the shell starting. Write "yes" to start.
+START_GPGAGENT_SH="yes"
+# If the user does not like start the gpg-agent then he need create this 
+# empty file:
+# $HOME/.gnupg/gpg-agent-no-start
+
+# This option pass to all users' all gpg-agent process. Please don't use 
+# empty sting. The empti string will replace to the default.
+# To the changing please read this bugs: #60298, #59727
+GPGAGENT_PARAMS="--keep-display"
+# This params will shutdown the gpg-agent with 1-2 min idle timeout.
+#GPGAGENT_PARAMS="--keep-display --use-standard-socket"
+
+# Please list the users' ID who don't use or start automatic the gpg-agent
+# Start and end the string with a space.
+GPG_AGENT_NO_USERS=" 0 "
+#GPG_AGENT_NO_USERS=" 0 `seq --separator=\  1000 2000` "
+

@@ -1,36 +1,39 @@
-%bcond_without	openldap
+%define	pkgname	gnupg
+
+%bcond_without gpgagentscript
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	1.4.16
+Version:	2.0.22
 Release:	1
 License:	GPLv3
 Group:		File tools
-Url:		http://www.gnupg.org
-Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2
-Source1:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{name}-%{version}.tar.bz2.sig
-Source2:	mdk-keys.tar.bz2
-Source3:	mdk-keys.tar.bz2.sig
-Patch1:		gnupg-1.4.2.2-use-agent-by-default.diff
-Patch4:		gnupg-1.4.5-ppc64.patch
-# splitted off from the previous debian patch
-Patch6:		gnupg-1.4.7-deb-free_caps.patch
-Patch7:		gnupg-1.4.7-deb-manpage.patch
-Patch8:		gnupg-1.4.7-deb-min_privileges.patch
-Patch9:		gnupg-1.4.16-disable-check-aarch64.patch
-
-BuildRequires:	bison
+URL:		http://www.gnupg.org
+Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
+Source2:	gpg-agent.sh
+Source3:	gpg-agent-xinit.sh
+Source4:	sysconfig-gnupg
+Patch0:		gnupg-1.9.3-use-ImageMagick-for-photo.patch
+Patch1:		gnupg-2.0.20-tests-s2kcount.patch
+BuildRequires:	openldap-devel
+BuildRequires:	sendmail-command
+BuildRequires:	libgpg-error-devel >= 1.4
+BuildRequires:	libgcrypt-devel >= 1.2.0
+BuildRequires:	libassuan-devel >= 1.0.2
+BuildRequires:	libksba-devel >= 1.0.2
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pth-devel >= 2.0.0
 BuildRequires:	docbook-utils
-BuildRequires:	gettext
-BuildRequires:	postfix #sendmail-command
-BuildRequires:	bzip2-devel
 BuildRequires:	readline-devel
+BuildRequires:	termcap-devel
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
-BuildRequires:	pkgconfig(ncursesw)
-%if %{with openldap}
-BuildRequires:	openldap-devel
-%endif
+BuildRequires:	bzip2-devel
+BuildRequires:	libassuan-devel
+Obsoletes:	newpg
+Provides:	newpg = %{version}-%{release}
+Requires:	dirmngr
+Requires:	pinentry
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.
@@ -39,77 +42,98 @@ It includes an advanced key management facility and is compliant
 with the proposed OpenPGP Internet standard as described in RFC2440.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch4 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%ifarch aarch64
-%patch9 -p1
-%endif
+%setup -q -n %{pkgname}-%{version}
+%patch0 -p1 -b .ImageMagick~
+%patch1 -p1 -b .test~
 
 %build
 %serverbuild
+
+./autogen.sh
+
 %configure2_5x \
-	--without-included-regex \
-	--without-included-gettext \
-	--without-included-zlib \
-	--with-static-rnd=linux \
-	--without-capabilities \
-	--enable-noexecstack \
-%ifarch %{sunsparc}
-	--enable-m-guard
-%else
-	--disable-m-guard
-%endif
+	--libexecdir=%{_libdir}/gnupg2 \
+	--enable-symcryptrun \
+	--disable-rpath \
+	--with-adns=no \
+	--with-pkits-tests
+
+# no parallel make (v2.0.5 at least)
 %make
 
+# all tests must pass on i586 and x86_64
 %check
-# all tests must pass
+[[ -n "$GPG_AGENT_INFO" ]] || eval `./agent/gpg-agent --use-standard-socket --daemon --write-env-file gpg-agent-info`
 make check
+[[ -a gpg-agent-info ]] && kill -0 `cut -d: -f 2 gpg-agent-info`
+rm -f gpg-agent-info
 
 %install
 %makeinstall_std
+#Remove: #60298
+%if %{with gpgagentscript}
+install -d %{buildroot}/%{_sysconfdir}/profile.d
+install %{SOURCE2} %{buildroot}/%{_sysconfdir}/profile.d/gpg-agent.sh
+install -d %{buildroot}/%{_sysconfdir}/X11/xinit.d
+install %{SOURCE3} %{buildroot}/%{_sysconfdir}/X11/xinit.d/gpg-agent
+install -d %{buildroot}/%{_sysconfdir}/sysconfig
+install %{SOURCE4} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
+%endif
 
-sed -e "s#../g10/gpg#gpg#" < tools/lspgpot > %{buildroot}%{_bindir}/lspgpot
-
-sed -i -e 's|/usr/local|/usr/|' %{buildroot}%{_mandir}/man1/gpg.1
-
-# install some extra man pages by debian
-install -m0644 debian/gpgsplit.1 %{buildroot}%{_mandir}/man1/
-install -m0644 debian/lspgpot.1 %{buildroot}%{_mandir}/man1/
-
-# installed but not wanted
-rm -f %{buildroot}%{_datadir}/gnupg/{FAQ,faq.html}
-rm -f %{buildroot}%{_datadir}/locale/locale.alias
-
-mkdir -p %{buildroot}%{_sysconfdir}/RPM-GPG-KEYS
-tar xvjf %{SOURCE2} -C %{buildroot}%{_sysconfdir}/RPM-GPG-KEYS
+ln -s gpg2 %{buildroot}%{_bindir}/gpg
+ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 
 %find_lang %{name}
 
 %files -f %{name}.lang
-%doc README NEWS THANKS TODO doc/DETAILS doc/FAQ doc/HACKING
-%doc doc/OpenPGP doc/samplekeys.asc
-%doc doc/gpgv.texi
-%dir %{_sysconfdir}/RPM-GPG-KEYS
-%attr(0644,root,root) %{_sysconfdir}/RPM-GPG-KEYS/*.asc
-%attr(0755,root,root) %{_bindir}/gpg
-%attr(0755,root,root) %{_bindir}/gpgv
-%attr(0755,root,root) %{_bindir}/lspgpot
-%attr(0755,root,root) %{_bindir}/gpgsplit
-%attr(0755,root,root) %{_bindir}/gpg-zip
-%dir %{_libdir}/gnupg
-%attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_curl
-%attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_finger
-%attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_hkp
-%if %{with openldap}
-%attr(0755,root,root) %{_libdir}/gnupg/gpgkeys_ldap
+%defattr(-,root,root)
+%doc README NEWS THANKS TODO ChangeLog
+%doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS 
+%doc doc/examples
+%if %{with gpgagentscript}
+%attr(0755,root,root) %{_sysconfdir}/profile.d/gpg-agent.sh
+%attr(0755,root,root) %{_sysconfdir}/X11/xinit.d/gpg-agent
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
-%dir %{_datadir}/gnupg
-%{_datadir}/gnupg/options.skel
-%{_mandir}/man1/*
-%{_mandir}/man7/*
-%{_infodir}/gnupg1.info*
+%attr(4755,root,root) %{_bindir}/gpgsm
+%{_bindir}/gpg-agent
+%{_bindir}/gpgconf
+%{_bindir}/kbxutil
+%{_bindir}/watchgnupg
+%{_bindir}/gpgsm-gencert.sh
+%{_bindir}/gpgkey2ssh
+%{_bindir}/gpg-connect-agent
+%{_bindir}/gpgparsemail
+%{_bindir}/gpg
+%{_bindir}/gpg2
+%{_bindir}/gpgv
+%{_bindir}/gpgv2
+%{_bindir}/symcryptrun
+%{_sbindir}/addgnupghome
+%{_sbindir}/applygnupgdefaults
+%dir %{_libdir}/gnupg2
+%{_libdir}/gnupg2/gpg-check-pattern
+%{_libdir}/gnupg2/gpg-preset-passphrase
+%{_libdir}/gnupg2/gpg-protect-tool
+%{_libdir}/gnupg2/gnupg-pcsc-wrapper
+%{_libdir}/gnupg2/gpg2keys_curl
+%{_libdir}/gnupg2/gpg2keys_finger
+%{_libdir}/gnupg2/gpg2keys_hkp
+%{_libdir}/gnupg2/gpg2keys_ldap
+%{_libdir}/gnupg2/scdaemon
+%{_infodir}/gnupg.info*
+%{_mandir}/man1/gpg-agent.1*
+%{_mandir}/man1/gpg-connect-agent.1*
+%{_mandir}/man1/gpg-preset-passphrase.1*
+%{_mandir}/man1/gpg2.1*
+%{_mandir}/man1/gpgconf.1*
+%{_mandir}/man1/gpgparsemail.1*
+%{_mandir}/man1/gpgsm-gencert.sh.1*
+%{_mandir}/man1/gpgsm.1*
+%{_mandir}/man1/gpgv2.1*
+%{_mandir}/man1/scdaemon.1*
+%{_mandir}/man1/symcryptrun.1*
+%{_mandir}/man1/watchgnupg.1*
+%{_mandir}/man8/addgnupghome.8*
+%{_mandir}/man8/applygnupgdefaults.8*
 
