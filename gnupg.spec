@@ -5,7 +5,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.0.22
-Release:	1
+Release:	2
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -30,10 +30,9 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	bzip2-devel
 BuildRequires:	libassuan-devel
-Obsoletes:	newpg
-Provides:	newpg = %{version}-%{release}
 Requires:	dirmngr
 Requires:	pinentry
+%rename gnupg2
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.
