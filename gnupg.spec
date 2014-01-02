@@ -96,6 +96,7 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
 %attr(4755,root,root) %{_bindir}/gpgsm
+%{_datadir}/gnupg
 %{_bindir}/gpg-agent
 %{_bindir}/gpgconf
 %{_bindir}/kbxutil
@@ -137,4 +138,3 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_mandir}/man1/watchgnupg.1*
 %{_mandir}/man8/addgnupghome.8*
 %{_mandir}/man8/applygnupgdefaults.8*
-%{_datadir}/gnugp
