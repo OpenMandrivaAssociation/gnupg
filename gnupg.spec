@@ -131,9 +131,10 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_mandir}/man1/gpgsm-gencert.sh.1*
 %{_mandir}/man1/gpgsm.1*
 %{_mandir}/man1/gpgv2.1*
+%{_mandir}/man1/gpg-zip.1*
 %{_mandir}/man1/scdaemon.1*
 %{_mandir}/man1/symcryptrun.1*
 %{_mandir}/man1/watchgnupg.1*
 %{_mandir}/man8/addgnupghome.8*
 %{_mandir}/man8/applygnupgdefaults.8*
-
+%{_datadir}/gnugp
