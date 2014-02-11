@@ -116,10 +116,10 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_libdir}/gnupg2/gpg-preset-passphrase
 %{_libdir}/gnupg2/gpg-protect-tool
 %{_libdir}/gnupg2/gnupg-pcsc-wrapper
-%{_libdir}/gnupg2/gpg2keys_curl
-%{_libdir}/gnupg2/gpg2keys_finger
-%{_libdir}/gnupg2/gpg2keys_hkp
-%{_libdir}/gnupg2/gpg2keys_ldap
+%{_libexecdir}/gnupg2/gpg2keys_curl
+%{_libexecdir}/gnupg2/gpg2keys_finger
+%{_libexecdir}/gnupg2/gpg2keys_hkp
+%{_libexecdir}/gnupg2/gpg2keys_ldap
 %{_libdir}/gnupg2/scdaemon
 %{_infodir}/gnupg.info*
 %{_mandir}/man1/gpg-agent.1*
