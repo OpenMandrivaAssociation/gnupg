@@ -51,7 +51,6 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 ./autogen.sh
 
 %configure2_5x \
-	--libexecdir=%{_libdir}/gnupg2 \
 	--enable-symcryptrun \
 	--disable-rpath \
 	--with-adns=no \
@@ -111,16 +110,15 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_bindir}/symcryptrun
 %{_sbindir}/addgnupghome
 %{_sbindir}/applygnupgdefaults
-%dir %{_libdir}/gnupg2
-%{_libdir}/gnupg2/gpg-check-pattern
-%{_libdir}/gnupg2/gpg-preset-passphrase
-%{_libdir}/gnupg2/gpg-protect-tool
-%{_libdir}/gnupg2/gnupg-pcsc-wrapper
-%{_libexecdir}/gnupg2/gpg2keys_curl
-%{_libexecdir}/gnupg2/gpg2keys_finger
-%{_libexecdir}/gnupg2/gpg2keys_hkp
-%{_libexecdir}/gnupg2/gpg2keys_ldap
-%{_libdir}/gnupg2/scdaemon
+%{_libexecdir}/gpg-check-pattern
+%{_libexecdir}/gpg-preset-passphrase
+%{_libexecdir}/gpg-protect-tool
+%{_libexecdir}/gnupg-pcsc-wrapper
+%{_libexecdir}/gpg2keys_curl
+%{_libexecdir}/gpg2keys_finger
+%{_libexecdir}/gpg2keys_hkp
+%{_libexecdir}/gpg2keys_ldap
+%{_libexecdir}/scdaemon
 %{_infodir}/gnupg.info*
 %{_mandir}/man1/gpg-agent.1*
 %{_mandir}/man1/gpg-connect-agent.1*
