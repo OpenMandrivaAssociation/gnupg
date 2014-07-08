@@ -46,11 +46,15 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %patch1 -p1 -b .test~
 
 %build
+# known bug
+# https://bugs.funtoo.org/browse/FL-297
+# http://clang.debian.net/status.php?version=3.1&key=UNKNOWN_TYPE_NAME
+export CC=gcc
 %serverbuild
 
 ./autogen.sh
 
-%configure2_5x \
+%configure \
 	--enable-symcryptrun \
 	--disable-rpath \
 	--with-adns=no \
