@@ -4,7 +4,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.0.26
+Version:	2.1.0
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -14,7 +14,7 @@ Source2:	gpg-agent.sh
 Source3:	gpg-agent-xinit.sh
 Source4:	sysconfig-gnupg
 Patch0:		gnupg-1.9.3-use-ImageMagick-for-photo.patch
-Patch1:		gnupg-2.0.20-tests-s2kcount.patch
+#Patch1:		gnupg-2.0.20-tests-s2kcount.patch
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	libgpg-error-devel >= 1.4
@@ -22,7 +22,7 @@ BuildRequires:	libgcrypt-devel >= 1.2.0
 BuildRequires:	libassuan-devel >= 1.0.2
 BuildRequires:	libksba-devel >= 1.0.2
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	pth-devel >= 2.0.0
+BuildRequires:	npth-devel >= 1.0
 BuildRequires:	docbook-utils
 BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ncurses)
@@ -30,8 +30,12 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	bzip2-devel
 BuildRequires:	libassuan-devel
-Requires:	dirmngr
 Requires:	pinentry
+# This used to be a required separate package; it has been
+# merged into gnupg upstream in 2.1.0
+# No need for a legacy Provides: because dirmngr was never
+# used for anything other then gnupg2
+Obsoletes:	dirmngr
 %rename gnupg2
 
 %description
@@ -43,13 +47,14 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %prep
 %setup -q -n %{pkgname}-%{version}
 %patch0 -p1 -b .ImageMagick~
-%patch1 -p1 -b .test~
 
 %build
 # known bug
 # https://bugs.funtoo.org/browse/FL-297
 # http://clang.debian.net/status.php?version=3.1&key=UNKNOWN_TYPE_NAME
-export CC=gcc
+# cause: gnulib's stdint.h is broken -- let's just drop it in favor of
+# assuming the OS isn't broken beyond repair
+echo '#include_next <stdint.h>' >gl/stdint_.h
 %serverbuild
 
 ./autogen.sh
@@ -82,6 +87,12 @@ install -d %{buildroot}/%{_sysconfdir}/sysconfig
 install %{SOURCE4} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
 %endif
 
+mkdir -p %{buildroot}%{_sysconfdir}/dirmngr
+mkdir -p %{buildroot}%{_sysconfdir}/dirmngr/trusted-certs
+mkdir -p %{buildroot}%{_var}/run/dirmngr
+mkdir -p %{buildroot}%{_var}/cache/dirmngr/crls.d
+mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
+
 ln -s gpg2 %{buildroot}%{_bindir}/gpg
 ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 
@@ -98,9 +109,15 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
 %attr(4755,root,root) %{_bindir}/gpgsm
+%dir %{_sysconfdir}/dirmngr
+%dir %{_sysconfdir}/dirmngr/trusted-certs
 %{_datadir}/gnupg
+%{_bindir}/dirmngr
+%{_bindir}/dirmngr-client
+%{_bindir}/g13
 %{_bindir}/gpg-agent
 %{_bindir}/gpgconf
+%{_bindir}/gpgtar
 %{_bindir}/kbxutil
 %{_bindir}/watchgnupg
 %{_bindir}/gpgsm-gencert.sh
@@ -114,16 +131,13 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_bindir}/symcryptrun
 %{_sbindir}/addgnupghome
 %{_sbindir}/applygnupgdefaults
+%{_libexecdir}/dirmngr_ldap
 %{_libexecdir}/gpg-check-pattern
 %{_libexecdir}/gpg-preset-passphrase
 %{_libexecdir}/gpg-protect-tool
-%{_libexecdir}/gnupg-pcsc-wrapper
-%{_libexecdir}/gpg2keys_curl
-%{_libexecdir}/gpg2keys_finger
-%{_libexecdir}/gpg2keys_hkp
-%{_libexecdir}/gpg2keys_ldap
 %{_libexecdir}/scdaemon
 %{_infodir}/gnupg.info*
+%{_mandir}/man1/dirmngr-client.1*
 %{_mandir}/man1/gpg-agent.1*
 %{_mandir}/man1/gpg-connect-agent.1*
 %{_mandir}/man1/gpg-preset-passphrase.1*
@@ -137,5 +151,7 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_mandir}/man1/scdaemon.1*
 %{_mandir}/man1/symcryptrun.1*
 %{_mandir}/man1/watchgnupg.1*
+%{_mandir}/man7/gnupg.7*
 %{_mandir}/man8/addgnupghome.8*
 %{_mandir}/man8/applygnupgdefaults.8*
+%{_mandir}/man8/dirmngr.8*
