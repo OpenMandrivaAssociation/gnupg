@@ -4,8 +4,8 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.1.0
-Release:	2
+Version:	2.1.1
+Release:	1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -14,7 +14,6 @@ Source2:	gpg-agent.sh
 Source3:	gpg-agent-xinit.sh
 Source4:	sysconfig-gnupg
 Patch0:		gnupg-1.9.3-use-ImageMagick-for-photo.patch
-#Patch1:		gnupg-2.0.20-tests-s2kcount.patch
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	libgpg-error-devel >= 1.4
@@ -46,7 +45,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 
 %prep
 %setup -q -n %{pkgname}-%{version}
-%patch0 -p1 -b .ImageMagick~
+%apply_patches
 
 %build
 # known bug
@@ -54,7 +53,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 # http://clang.debian.net/status.php?version=3.1&key=UNKNOWN_TYPE_NAME
 # cause: gnulib's stdint.h is broken -- let's just drop it in favor of
 # assuming the OS isn't broken beyond repair
-echo '#include_next <stdint.h>' >gl/stdint_.h
+# echo '#include_next <stdint.h>' >gl/stdint_.h
 %serverbuild
 
 ./autogen.sh
