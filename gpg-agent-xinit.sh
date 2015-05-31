@@ -8,7 +8,7 @@ if [[ $UID -lt 500 ]] ; then
 		-s /etc/mtab && \
 		"`echo $GPG_AGENT_NO_USERS | grep \ $UID\  ; echo $?`" -ne 0 && \
 		! -e $HOME/.gnupg/gpg-agent-no-start ]] ; then
-		
+
 		GPGAGENTINFO="$HOME/.gnupg/gpg-agent-info"
 		NEEDSTART=0
 		if [ -f "$GPGAGENTINFO" ] ; then
