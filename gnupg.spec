@@ -28,7 +28,6 @@ BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	bzip2-devel
-BuildRequires:	libassuan-devel
 Requires:	pinentry
 # This used to be a required separate package; it has been
 # merged into gnupg upstream in 2.1.0
