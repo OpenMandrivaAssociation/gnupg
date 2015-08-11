@@ -4,8 +4,8 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.1.5
-Release:	2
+Version:	2.1.7
+Release:	1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -118,7 +118,6 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_bindir}/gpgtar
 %{_bindir}/kbxutil
 %{_bindir}/watchgnupg
-%{_bindir}/gpgsm-gencert.sh
 %{_bindir}/gpgkey2ssh
 %{_bindir}/gpg-connect-agent
 %{_bindir}/gpgparsemail
@@ -142,7 +141,6 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_mandir}/man1/gpg2.1*
 %{_mandir}/man1/gpgconf.1*
 %{_mandir}/man1/gpgparsemail.1*
-%{_mandir}/man1/gpgsm-gencert.sh.1*
 %{_mandir}/man1/gpgsm.1*
 %{_mandir}/man1/gpgv2.1*
 %{_mandir}/man1/gpg-zip.1*
