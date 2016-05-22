@@ -4,7 +4,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.1.9
+Version:	2.1.12
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -27,6 +27,7 @@ BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
+BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	bzip2-devel
 Requires:	pinentry
 # This used to be a required separate package; it has been
@@ -59,6 +60,8 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 
 %configure \
 	--enable-symcryptrun \
+	--enable-g13 \
+	--enable-gpg2-is-gpg \
 	--disable-rpath \
 	--with-adns=no \
 	--with-pkits-tests
@@ -91,9 +94,6 @@ mkdir -p %{buildroot}%{_var}/run/dirmngr
 mkdir -p %{buildroot}%{_var}/cache/dirmngr/crls.d
 mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 
-ln -s gpg2 %{buildroot}%{_bindir}/gpg
-ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
-
 %find_lang %{name}2
 
 %files -f %{name}2.lang
@@ -118,16 +118,14 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_bindir}/gpgtar
 %{_bindir}/kbxutil
 %{_bindir}/watchgnupg
-%{_bindir}/gpgkey2ssh
 %{_bindir}/gpg-connect-agent
 %{_bindir}/gpgparsemail
 %{_bindir}/gpg
-%{_bindir}/gpg2
 %{_bindir}/gpgv
-%{_bindir}/gpgv2
 %{_bindir}/symcryptrun
 %{_sbindir}/addgnupghome
 %{_sbindir}/applygnupgdefaults
+%{_sbindir}/g13-syshelp
 %{_libexecdir}/dirmngr_ldap
 %{_libexecdir}/gpg-check-pattern
 %{_libexecdir}/gpg-preset-passphrase
@@ -138,12 +136,11 @@ ln -s gpgv2 %{buildroot}%{_bindir}/gpgv
 %{_mandir}/man1/gpg-agent.1*
 %{_mandir}/man1/gpg-connect-agent.1*
 %{_mandir}/man1/gpg-preset-passphrase.1*
-%{_mandir}/man1/gpg2.1*
+%{_mandir}/man1/gpg.1.*
+%{_mandir}/man1/gpgv.1.*
 %{_mandir}/man1/gpgconf.1*
 %{_mandir}/man1/gpgparsemail.1*
 %{_mandir}/man1/gpgsm.1*
-%{_mandir}/man1/gpgv2.1*
-%{_mandir}/man1/gpg-zip.1*
 %{_mandir}/man1/scdaemon.1*
 %{_mandir}/man1/symcryptrun.1*
 %{_mandir}/man1/watchgnupg.1*
