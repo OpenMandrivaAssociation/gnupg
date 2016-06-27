@@ -1,12 +1,14 @@
 [Unit]
 Description=GnuPG private key agent
 IgnoreOnIsolate=true
-
+ 
 [Service]
 Type=forking
 EnvironmentFile=-/etc/sysconfig/gnupg
 ExecStart=/usr/bin/gpg-agent --daemon $GPGAGENT_PARAMS
+ExecStartPre=-/usr/bin/pkill gpg-agent
+ExecStop=/usr/bin/pkill gpg-agent
 Restart=on-abort
-
+ 
 [Install]
 WantedBy=default.target
