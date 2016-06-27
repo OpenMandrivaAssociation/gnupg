@@ -5,14 +5,13 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.1.13
-Release:	1
+Release:	4
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
 Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
-Source2:	gpg-agent.sh
-Source3:	gpg-agent-xinit.sh
-Source4:	sysconfig-gnupg
+Source1:	sysconfig-gnupg
+Source2:	gpg-agent.service
 Patch0:		gnupg-1.9.3-use-ImageMagick-for-photo.patch
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
@@ -36,7 +35,7 @@ Requires:	pinentry
 # No need for a legacy Provides: because dirmngr was never
 # used for anything other then gnupg2
 Obsoletes:	dirmngr
-%rename gnupg2
+%rename		gnupg2
 
 %description
 GnuPG is GNU's tool for secure communication and data storage.
@@ -67,7 +66,6 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 	--with-adns=no \
 	--with-pkits-tests
 
-# no parallel make (v2.0.5 at least)
 %make
 
 # all tests must pass on i586 and x86_64
@@ -84,12 +82,12 @@ rm -f gpg-agent-info
 %makeinstall_std
 #Remove: #60298
 %if %{with gpgagentscript}
-install -d %{buildroot}/%{_sysconfdir}/profile.d
-install %{SOURCE2} %{buildroot}/%{_sysconfdir}/profile.d/gpg-agent.sh
-install -d %{buildroot}/%{_sysconfdir}/X11/xinit.d
-install %{SOURCE3} %{buildroot}/%{_sysconfdir}/X11/xinit.d/gpg-agent
 install -d %{buildroot}/%{_sysconfdir}/sysconfig
-install %{SOURCE4} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
+install %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
+# (tpg) enable gpg-agent in userland
+mkdir -p %{buildroot}%{_userunitdir}/default.target.wants
+install %{SOURCE2} %{buildroot}/%{_userunitdir}/gpg-agent.service
+ln -sf %{_userunitdir}/gpg-agent.service %{buildroot}%{_userunitdir}/default.target.wants/gpg-agent.service
 %endif
 
 mkdir -p %{buildroot}%{_sysconfdir}/dirmngr
@@ -101,14 +99,13 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %find_lang %{name}2
 
 %files -f %{name}2.lang
-%defattr(-,root,root)
-%doc README NEWS THANKS TODO ChangeLog
-%doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS 
+%doc README NEWS THANKS TODO
+%doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS
 %doc doc/examples
 %if %{with gpgagentscript}
-%attr(0755,root,root) %{_sysconfdir}/profile.d/gpg-agent.sh
-%attr(0755,root,root) %{_sysconfdir}/X11/xinit.d/gpg-agent
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%{_userunitdir}/gpg-agent.service
+%{_userunitdir}/default.target.wants/gpg-agent.service
 %endif
 %attr(4755,root,root) %{_bindir}/gpgsm
 %dir %{_sysconfdir}/dirmngr
