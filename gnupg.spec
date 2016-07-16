@@ -86,7 +86,7 @@ install -d %{buildroot}/%{_sysconfdir}/sysconfig
 install %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
 # (tpg) enable gpg-agent in userland
 mkdir -p %{buildroot}%{_userunitdir}/default.target.wants
-install %{SOURCE2} %{buildroot}/%{_userunitdir}/gpg-agent.service
+install -m644 %{SOURCE2} %{buildroot}/%{_userunitdir}/gpg-agent.service
 ln -sf %{_userunitdir}/gpg-agent.service %{buildroot}%{_userunitdir}/default.target.wants/gpg-agent.service
 %endif
 

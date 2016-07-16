@@ -5,10 +5,8 @@ IgnoreOnIsolate=true
 [Service]
 Type=forking
 EnvironmentFile=-/etc/sysconfig/gnupg
-Environment=SSH_AUTH_SOCK=%t/gnupg/S.gpg-agent.ssh
-ExecStart=/usr/bin/gpg-agent --daemon --enable-ssh-support $GPGAGENT_PARAMS
+ExecStart=/usr/bin/gpg-agent --daemon $GPGAGENT_PARAMS
 ExecStartPre=-/usr/bin/pkill gpg-agent
-ExecStartPost=/bin/systemctl --no-block --user set-environment SSH_AUTH_SOCK=${SSH_AUTH_SOCK}
 ExecStop=/usr/bin/pkill gpg-agent
 Restart=on-abort
 
