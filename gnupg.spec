@@ -5,7 +5,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.1.14
-Release:	2
+Release:	3
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -16,7 +16,7 @@ Patch0:		gnupg-1.9.3-use-ImageMagick-for-photo.patch
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
-BuildRequires:	libgcrypt-devel >= 1.2.0
+BuildRequires:	libgcrypt-devel >= 1.7.2-2
 BuildRequires:	libassuan-devel >= 2.4.3
 BuildRequires:	libksba-devel >= 1.0.2
 BuildRequires:	pkgconfig(zlib)
