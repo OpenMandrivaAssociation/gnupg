@@ -1,10 +1,14 @@
+# rebuilding configure causes a warning about development version
+# to appear
+%define _disable_rebuild_configure 1
+
 %define	pkgname	gnupg
 
 %bcond_without gpgagentscript
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.1.15
+Version:	2.1.16
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -55,8 +59,6 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 # assuming the OS isn't broken beyond repair
 # echo '#include_next <stdint.h>' >gl/stdint_.h
 %serverbuild
-
-./autogen.sh
 
 %configure \
 	--enable-symcryptrun \
@@ -134,6 +136,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_libexecdir}/gpg-check-pattern
 %{_libexecdir}/gpg-preset-passphrase
 %{_libexecdir}/gpg-protect-tool
+%{_libexecdir}/gpg-wks-client
 %{_libexecdir}/scdaemon
 %{_infodir}/gnupg.info*
 %{_mandir}/man1/dirmngr-client.1*
