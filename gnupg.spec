@@ -8,7 +8,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.1.18
+Version:	2.1.19
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -84,6 +84,7 @@ rm -f gpg-agent-info
 
 %install
 %makeinstall_std
+
 #Remove: #60298
 %if %{with gpgagentscript}
 install -d %{buildroot}/%{_sysconfdir}/sysconfig
