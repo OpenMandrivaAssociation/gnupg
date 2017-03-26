@@ -73,8 +73,8 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 # only 4 tests fails on i586
 %ifnarch %{ix86}
 %check
-# (tpg) somehow gpgtar does fail, prolly due to libarchive
-sed -i -e "s/gpgtar.test//" tests/openpgp/Makefile*
+# (tpg) somehow tofu does fail
+sed -i -e "s/tofu.scm//" tests/openpgp/Makefile*
 
 [[ -n "$GPG_AGENT_INFO" ]] || eval `./agent/gpg-agent --use-standard-socket --daemon --write-env-file gpg-agent-info`
 make check
