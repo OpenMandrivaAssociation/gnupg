@@ -8,7 +8,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.1.19
+Version:	2.1.23
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -144,6 +144,8 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_mandir}/man1/gpg-agent.1*
 %{_mandir}/man1/gpg-connect-agent.1*
 %{_mandir}/man1/gpg-preset-passphrase.1*
+%{_mandir}/man1/gpg-wks-server.1*
+%{_mandir}/man1/gpg-wks-client.1*
 %{_mandir}/man1/gpg.1.*
 %{_mandir}/man1/gpgv.1.*
 %{_mandir}/man1/gpgconf.1*
