@@ -63,10 +63,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %configure \
 	--enable-symcryptrun \
 	--enable-g13 \
-	--enable-gpg2-is-gpg \
-	--disable-rpath \
-	--with-adns=no \
-	--with-pkits-tests
+	--disable-rpath 
 
 %make
 
@@ -151,6 +148,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_mandir}/man1/gpgconf.1*
 %{_mandir}/man1/gpgparsemail.1*
 %{_mandir}/man1/gpgsm.1*
+%{_mandir}/man1/gpgtar.1*
 %{_mandir}/man1/scdaemon.1*
 %{_mandir}/man1/symcryptrun.1*
 %{_mandir}/man1/watchgnupg.1*
