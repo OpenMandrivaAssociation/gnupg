@@ -9,7 +9,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.2.5
-Release:	1
+Release:	2
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -32,8 +32,8 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
 BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(gnutls)
-BuildRequires:	bzip2-devel
-Requires:	pinentry
+BuildRequires:	pkgconfig(bzip2)
+Recommends:	pinentry
 # This used to be a required separate package; it has been
 # merged into gnupg upstream in 2.1.0
 # No need for a legacy Provides: because dirmngr was never
@@ -65,7 +65,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 	--enable-g13 \
 	--disable-rpath 
 
-%make
+%make_build
 
 # only 4 tests fails on i586
 %ifnarch %{ix86}
@@ -80,7 +80,7 @@ rm -f gpg-agent-info
 %endif
 
 %install
-%makeinstall_std
+%make_install
 
 #Remove: #60298
 %if %{with gpgagentscript}
