@@ -104,6 +104,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %doc README NEWS THANKS TODO
 %doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS
 %doc doc/examples
+%doc %{_docdir}/%{name}
 %if %{with gpgagentscript}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %{_userunitdir}/gpg-agent.service
