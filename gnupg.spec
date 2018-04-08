@@ -2,14 +2,14 @@
 # to appear
 %define _disable_rebuild_configure 1
 
-%define	pkgname	gnupg
+%define pkgname gnupg
 
 %bcond_without gpgagentscript
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.2.5
-Release:	2
+Release:	3
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -34,6 +34,7 @@ BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(bzip2)
 Recommends:	pinentry
+Recommends:	%{name}-doc
 # This used to be a required separate package; it has been
 # merged into gnupg upstream in 2.1.0
 # No need for a legacy Provides: because dirmngr was never
@@ -46,6 +47,13 @@ GnuPG is GNU's tool for secure communication and data storage.
 It can be used to encrypt data and to create digital signatures.
 It includes an advanced key management facility and is compliant
 with the proposed OpenPGP Internet standard as described in RFC2440.
+
+%package doc
+Summary:	Documentation and manuals for %{name}.
+Group:		Books/Computer books
+
+%description
+Documentation and manuals for %{name}.
 
 %prep
 %setup -q -n %{pkgname}-%{version}
@@ -63,7 +71,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 %configure \
 	--enable-symcryptrun \
 	--enable-g13 \
-	--disable-rpath 
+	--disable-rpath
 
 %make_build
 
@@ -101,10 +109,6 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %find_lang %{name}2
 
 %files -f %{name}2.lang
-%doc README NEWS THANKS TODO
-%doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS
-%doc doc/examples
-%doc %{_docdir}/%{name}
 %if %{with gpgagentscript}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %{_userunitdir}/gpg-agent.service
@@ -137,6 +141,12 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_libexecdir}/gpg-protect-tool
 %{_libexecdir}/gpg-wks-client
 %{_libexecdir}/scdaemon
+
+%files doc
+%doc README NEWS THANKS TODO
+%doc doc/FAQ doc/HACKING doc/KEYSERVER doc/OpenPGP doc/TRANSLATE doc/DETAILS
+%doc doc/examples
+%doc %{_docdir}/%{name}
 %{_infodir}/gnupg.info*
 %{_mandir}/man1/dirmngr-client.1*
 %{_mandir}/man1/gpg-agent.1*
