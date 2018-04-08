@@ -52,7 +52,7 @@ with the proposed OpenPGP Internet standard as described in RFC2440.
 Summary:	Documentation and manuals for %{name}.
 Group:		Books/Computer books
 
-%description
+%description doc
 Documentation and manuals for %{name}.
 
 %prep
