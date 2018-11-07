@@ -8,8 +8,8 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.10
-Release:	2
+Version:	2.2.11
+Release:	1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -122,6 +122,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_bindir}/dirmngr-client
 %{_bindir}/g13
 %{_bindir}/gpg-agent
+%{_bindir}/gpg-wks-server
 %{_bindir}/gpgconf
 %{_bindir}/gpgtar
 %{_bindir}/kbxutil
