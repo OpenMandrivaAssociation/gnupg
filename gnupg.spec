@@ -56,8 +56,7 @@ Group:		Books/Computer books
 Documentation and manuals for %{name}.
 
 %prep
-%setup -q -n %{pkgname}-%{version}
-%apply_patches
+%autosetup -n %{pkgname}-%{version} -p1
 
 %build
 # known bug
