@@ -4,11 +4,13 @@
 
 %define pkgname gnupg
 
+%global optflags %{optflags} -O3
+
 %bcond_without gpgagentscript
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.14
+Version:	2.2.15
 Release:	1
 License:	GPLv3
 Group:		File tools
