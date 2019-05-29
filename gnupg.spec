@@ -18,7 +18,6 @@ URL:		http://www.gnupg.org
 Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
 Source1:	sysconfig-gnupg
 Source2:	gpg-agent.service
-Patch0:		gnupg-1.9.3-use-ImageMagick-for-photo.patch
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
