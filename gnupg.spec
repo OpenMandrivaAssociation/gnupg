@@ -10,7 +10,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.16
+Version:	2.2.17
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -81,9 +81,9 @@ Documentation and manuals for %{name}.
 # (tpg) somehow tofu does fail
 sed -i -e "s/tofu.scm//" tests/openpgp/Makefile*
 
-[[ -n "$GPG_AGENT_INFO" ]] || eval `./agent/gpg-agent --use-standard-socket --daemon --write-env-file gpg-agent-info`
+[[ -n "$GPG_AGENT_INFO" ]] || eval $(./agent/gpg-agent --use-standard-socket --daemon --write-env-file gpg-agent-info)
 make check
-[[ -a gpg-agent-info ]] && kill -0 `cut -d: -f 2 gpg-agent-info`
+[[ -a gpg-agent-info ]] && kill -0 $(cut -d: -f 2 gpg-agent-info)
 rm -f gpg-agent-info
 %endif
 
