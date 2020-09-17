@@ -11,7 +11,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.2.23
-Release:	1
+Release:	2
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -35,7 +35,6 @@ BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(bzip2)
 Recommends:	pinentry
-Recommends:	%{name}-doc
 # This used to be a required separate package; it has been
 # merged into gnupg upstream in 2.1.0
 # No need for a legacy Provides: because dirmngr was never
