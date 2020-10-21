@@ -11,13 +11,12 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.2.23
-Release:	2
+Release:	3
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
 Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
 Source1:	sysconfig-gnupg
-Source2:	gpg-agent.service
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
@@ -93,10 +92,14 @@ rm -f gpg-agent-info
 %if %{with gpgagentscript}
 install -d %{buildroot}/%{_sysconfdir}/sysconfig
 install %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
+
 # (tpg) enable gpg-agent in userland
-mkdir -p %{buildroot}%{_userunitdir}/default.target.wants
-install -m644 %{SOURCE2} %{buildroot}/%{_userunitdir}/gpg-agent.service
-ln -sf %{_userunitdir}/gpg-agent.service %{buildroot}%{_userunitdir}/default.target.wants/gpg-agent.service
+mkdir -p %{buildroot}%{_userunitdir}/sockets.target.wants
+cp -a  doc/examples/systemd-user/*.{socket,service} %{buildroot}%{_userunitdir}/*
+for i in dirmngr.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent.socket; do
+	ln -sf %{_userunitdir}/%i %{buildroot}%{_userunitdir}/sockets.target.wants/%i
+end
+
 %endif
 
 mkdir -p %{buildroot}%{_sysconfdir}/dirmngr
@@ -110,8 +113,9 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %files -f %{name}2.lang
 %if %{with gpgagentscript}
 %attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%{_userunitdir}/gpg-agent.service
-%{_userunitdir}/default.target.wants/gpg-agent.service
+%{_userunitdir}/*.service
+%{_userunitdir}/*.socket
+%{_userunitdir}/sockets.target.wants/*.socket
 %endif
 %attr(4755,root,root) %{_bindir}/gpgsm
 %dir %{_sysconfdir}/dirmngr
