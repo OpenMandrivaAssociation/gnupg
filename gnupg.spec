@@ -95,9 +95,9 @@ install %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
 
 # (tpg) enable gpg-agent in userland
 mkdir -p %{buildroot}%{_userunitdir}/sockets.target.wants
-cp -a  doc/examples/systemd-user/*.{socket,service} %{buildroot}%{_userunitdir}/*
+cp -a  doc/examples/systemd-user/*.{socket,service} %{buildroot}%{_userunitdir}
 for i in dirmngr.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent.socket; do
-	ln -sf %{_userunitdir}/%i %{buildroot}%{_userunitdir}/sockets.target.wants/%i
+	ln -sf %{_userunitdir}/$i %{buildroot}%{_userunitdir}/sockets.target.wants/$i
 done
 %endif
 
