@@ -20,9 +20,10 @@ Source1:	sysconfig-gnupg
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
+BuildRequires:	hostname
 BuildRequires:	libgcrypt-devel >= 1.7.2-2
-BuildRequires:	libassuan-devel >= 2.4.3
-BuildRequires:	libksba-devel >= 1.0.2
+BuildRequires:	pkgconfig(libassuan) >= 2.4.3
+BuildRequires:	pkgconfig(ksba) >= 1.0.2
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	npth-devel >= 1.0
 BuildRequires:	docbook-utils
