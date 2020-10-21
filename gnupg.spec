@@ -21,16 +21,15 @@ Source1:	sysconfig-gnupg
 # (tpg) add patches from Fedora
 # fix handling of missing key usage on ocsp replies - upstream T1333
 Patch100:	gnupg-2.2.16-ocsp-keyusage.patch
-Patch101:	gnupg-2.1.1-fips-algo.patch
 # allow 8192 bit RSA keys in keygen UI with large RSA
-Patch102:	gnupg-2.2.23-large-rsa.patch
+Patch101:	gnupg-2.2.23-large-rsa.patch
 # fix missing uid on refresh from keys.openpgp.org
 # https://salsa.debian.org/debian/gnupg2/commit/f292beac1171c6c77faf41d1f88c2e0942ed4437
-Patch103:	gnupg-2.2.18-tests-add-test-cases-for-import-without-uid.patch
-Patch104:	gnupg-2.2.18-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
-Patch105:	gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
+Patch102:	gnupg-2.2.18-tests-add-test-cases-for-import-without-uid.patch
+Patch103:	gnupg-2.2.18-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
+Patch104:	gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
 # Fixes for issues found in Coverity scan - reported upstream
-Patch106:	gnupg-2.2.21-coverity.patch
+Patch105:	gnupg-2.2.21-coverity.patch
 
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
