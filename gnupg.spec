@@ -98,8 +98,7 @@ mkdir -p %{buildroot}%{_userunitdir}/sockets.target.wants
 cp -a  doc/examples/systemd-user/*.{socket,service} %{buildroot}%{_userunitdir}/*
 for i in dirmngr.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent.socket; do
 	ln -sf %{_userunitdir}/%i %{buildroot}%{_userunitdir}/sockets.target.wants/%i
-end
-
+done
 %endif
 
 mkdir -p %{buildroot}%{_sysconfdir}/dirmngr
