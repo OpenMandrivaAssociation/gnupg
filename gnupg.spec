@@ -10,8 +10,8 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.23
-Release:	4
+Version:	2.2.24
+Release:	1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -28,14 +28,12 @@ Patch101:	gnupg-2.2.23-large-rsa.patch
 Patch102:	gnupg-2.2.18-tests-add-test-cases-for-import-without-uid.patch
 Patch103:	gnupg-2.2.18-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
 Patch104:	gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
-# Fixes for issues found in Coverity scan - reported upstream
-Patch105:	gnupg-2.2.21-coverity.patch
 
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
 BuildRequires:	hostname
-BuildRequires:	libgcrypt-devel >= 1.7.2-2
+BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(libassuan) >= 2.4.3
 BuildRequires:	pkgconfig(ksba) >= 1.0.2
 BuildRequires:	pkgconfig(zlib)
