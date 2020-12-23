@@ -10,7 +10,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.25
+Version:	2.2.26
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -81,7 +81,6 @@ Documentation and manuals for %{name}.
 %serverbuild
 
 %configure \
-	--enable-symcryptrun \
 	--enable-g13 \
 	--disable-rpath \
 	--enable-large-secmem
@@ -150,7 +149,6 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_bindir}/gpg
 %{_bindir}/gpgv
 %{_bindir}/gpgscm
-%{_bindir}/symcryptrun
 %{_sbindir}/addgnupghome
 %{_sbindir}/applygnupgdefaults
 %{_sbindir}/g13-syshelp
