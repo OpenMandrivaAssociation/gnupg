@@ -10,7 +10,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.27
+Version:	2.2.31
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -167,6 +167,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_infodir}/gnupg.info*
 %{_mandir}/man1/dirmngr-client.1*
 %{_mandir}/man1/gpg-agent.1*
+%{_mandir}/man1/gpg-check-pattern.1*
 %{_mandir}/man1/gpg-connect-agent.1*
 %{_mandir}/man1/gpg-preset-passphrase.1*
 %{_mandir}/man1/gpg-wks-server.1*
@@ -178,7 +179,6 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_mandir}/man1/gpgsm.1*
 %{_mandir}/man1/gpgtar.1*
 %{_mandir}/man1/scdaemon.1*
-%{_mandir}/man1/symcryptrun.1*
 %{_mandir}/man1/watchgnupg.1*
 %{_mandir}/man7/gnupg.7*
 %{_mandir}/man8/addgnupghome.8*
