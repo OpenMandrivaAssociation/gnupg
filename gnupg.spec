@@ -11,12 +11,14 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.2.32
-Release:	1
+Release:	2
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
 Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
 Source1:	sysconfig-gnupg
+# (tpg) do not run under sddm user
+Patch0:		gnupg-2.2.32-conditions-user-sddm.patch
 
 # (tpg) add patches from Fedora
 # fix handling of missing key usage on ocsp replies - upstream T1333
@@ -72,14 +74,6 @@ Documentation and manuals for %{name}.
 %autosetup -n %{pkgname}-%{version} -p1
 
 %build
-# known bug
-# https://bugs.funtoo.org/browse/FL-297
-# http://clang.debian.net/status.php?version=3.1&key=UNKNOWN_TYPE_NAME
-# cause: gnulib's stdint.h is broken -- let's just drop it in favor of
-# assuming the OS isn't broken beyond repair
-# echo '#include_next <stdint.h>' >gl/stdint_.h
-%serverbuild
-
 %configure \
 	--enable-g13 \
 	--disable-rpath \
@@ -111,7 +105,7 @@ install %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
 mkdir -p %{buildroot}%{_userunitdir}/sockets.target.wants
 cp -a  doc/examples/systemd-user/*.{socket,service} %{buildroot}%{_userunitdir}
 for i in dirmngr.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent.socket; do
-	ln -sf %{_userunitdir}/$i %{buildroot}%{_userunitdir}/sockets.target.wants/$i
+    ln -sf %{_userunitdir}/$i %{buildroot}%{_userunitdir}/sockets.target.wants/$i
 done
 %endif
 
