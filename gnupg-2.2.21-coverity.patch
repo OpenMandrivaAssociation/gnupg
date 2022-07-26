@@ -1,0 +1,240 @@
+diff -up gnupg-2.2.21/common/server-help.c.coverity gnupg-2.2.21/common/server-help.c
+--- gnupg-2.2.21/common/server-help.c.coverity 2019-02-11 10:59:34.000000000 +0100
++++ gnupg-2.2.21/common/server-help.c  2020-07-20 17:09:57.416148768 +0200
+@@ -156,7 +156,7 @@ get_option_value (char *line, const char
+   *pend = 0;
+   *r_value = xtrystrdup (p);
+   *pend = c;
+-  if (!p)
++  if (!*r_value)
+     return my_error_from_syserror ();
+   return 0;
+ }
+
+From 7a707a3eff1c3fbe17a74337776871f408377cee Mon Sep 17 00:00:00 2001
+From: Jakub Jelen <jjelen@redhat.com>
+Date: Fri, 9 Apr 2021 16:13:07 +0200
+Subject: [PATCH GnuPG 03/19] g10: Fix memory leaks
+
+* g10/card-util.c (change_pin): free answer on errors
+  (ask_card_keyattr): free answer on error
+* g10/cpr.c (do_get_from_fd): free string
+* g10/gpg.c (check_permissions): free dir on weird error
+* g10/import.c (append_new_uid): release knode
+* g10/keyedit.c (menu_set_keyserver_url): free answer
+  (menu_set_keyserver_url): free user
+* g10/keygen.c (print_status_key_not_created): move allocation after
+  sanity check
+  (ask_expire_interval): free answer
+  (card_store_key_with_backup): goto leave instaed of return
+* g10/keyserver.c (parse_keyserver_uri): goto fail instead of return
+* g10/revoke.c (gen_desig_revoke): release kdbhd
+  (gen_desig_revoke): free answer
+* g10/tofu.c (ask_about_binding): free sqerr and response
+* g10/trustdb.c (ask_ownertrust): free pk
+
+--
+
+Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+---
+ g10/card-util.c | 14 +++++++++++---
+ g10/cpr.c       |  6 +++++-
+ g10/gpg.c       |  1 +
+ g10/import.c    |  5 ++++-
+ g10/keyedit.c   |  8 +++++++-
+ g10/keygen.c    | 15 +++++++++++----
+ g10/keyserver.c |  2 +-
+ g10/revoke.c    |  6 +++++-
+ g10/tofu.c      |  4 ++++
+ g10/trustdb.c   |  1 +
+ 10 files changed, 50 insertions(+), 12 deletions(-)
+
+diff --git a/g10/card-util.c b/g10/card-util.c
+index 36f096f06..c7df8380d 100644
+--- a/g10/card-util.c
++++ b/g10/card-util.c
+@@ -127,7 +127,7 @@ change_pin (int unblock_v2, int allow_admin)
+   else
+     for (;;)
+       {
+-	char *answer;
++	char *answer = NULL;
+ 
+ 	tty_printf ("\n");
+ 	tty_printf ("1 - change PIN\n"
+diff --git a/g10/tofu.c b/g10/tofu.c
+index f49083844..83786a08d 100644
+--- a/g10/tofu.c
++++ b/g10/tofu.c
+@@ -1687,6 +1687,8 @@ ask_about_binding (ctrl_t ctrl,
+          GPGSQL_ARG_END);
+       if (rc)
+         {
++          sqlite3_free (sqerr);
++          sqerr = NULL;
+           rc = gpg_error (GPG_ERR_GENERAL);
+           break;
+         }
+-- 
+2.30.2
+
+
+From 7c8048b686a6e811d0b24febf3c5e2528e7881f1 Mon Sep 17 00:00:00 2001
+From: Jakub Jelen <jjelen@redhat.com>
+Date: Tue, 13 Apr 2021 16:23:31 +0200
+Subject: [PATCH GnuPG 14/19] dirmgr: Avoid memory leaks
+
+* dirmngr/domaininfo.c (insert_or_update): free di_new
+
+--
+
+Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+---
+ dirmngr/domaininfo.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/dirmngr/domaininfo.c b/dirmngr/domaininfo.c
+index b41aef366..87782b4b1 100644
+--- a/dirmngr/domaininfo.c
++++ b/dirmngr/domaininfo.c
+@@ -193,6 +193,7 @@ insert_or_update (const char *domain,
+           log_error ("domaininfo: error allocating helper array: %s\n",
+                      gpg_strerror (gpg_err_code_from_syserror ()));
+           drop_extra = bucket;
++          xfree (di_new);
+           goto leave;
+         }
+       narray = 0;
+-- 
+2.30.2
+
+
+From ab3b8c53993b3305088efde756a44bac6e6492d4 Mon Sep 17 00:00:00 2001
+From: Jakub Jelen <jjelen@redhat.com>
+Date: Tue, 13 Apr 2021 16:34:40 +0200
+Subject: [PATCH GnuPG 15/19] scd: Avoid memory leaks and uninitialized memory
+
+* scd/app-piv.c (do_decipher): goto leave, initialize outdatalen
+
+--
+
+Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+---
+ scd/app-piv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/scd/app-piv.c b/scd/app-piv.c
+index 143cc047a..94257f0ee 100644
+--- a/scd/app-piv.c
++++ b/scd/app-piv.c
+@@ -2483,7 +2483,7 @@ do_decipher (app_t app, ctrl_t ctrl, const char *keyidstr,
+   gpg_error_t err;
+   data_object_t dobj;
+   unsigned char *outdata = NULL;
+-  size_t outdatalen;
++  size_t outdatalen = 0;
+   const unsigned char *s;
+   size_t n;
+   int keyref, mechanism;
+@@ -2582,7 +2582,7 @@ do_decipher (app_t app, ctrl_t ctrl, const char *keyidstr,
+   /* Now verify the Application PIN.  */
+   err = verify_chv (app, ctrl, 0x80, 0, pincb, pincb_arg);
+   if (err)
+-    return err;
++    goto leave;
+ 
+   /* Build the Dynamic Authentication Template.  */
+   err = concat_tlv_list (0, &apdudata, &apdudatalen,
+-- 
+2.30.2
+
+
+From f182bf91443618323e34261039045a6bde269be5 Mon Sep 17 00:00:00 2001
+From: Jakub Jelen <jjelen@redhat.com>
+Date: Tue, 13 Apr 2021 16:44:48 +0200
+Subject: [PATCH GnuPG 16/19] tools: Avoid memory leaks
+
+* tools/wks-util.c (wks_cmd_print_wkd_url): Free addrspec on error
+  (wks_cmd_print_wkd_hash): Free addrspec on error
+
+--
+
+Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+---
+ tools/wks-util.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/tools/wks-util.c b/tools/wks-util.c
+index 516c7fe00..38dd194ff 100644
+--- a/tools/wks-util.c
++++ b/tools/wks-util.c
+@@ -1192,11 +1192,14 @@ gpg_error_t
+ wks_cmd_print_wkd_hash (const char *userid)
+ {
+   gpg_error_t err;
+-  char *addrspec, *fname;
++  char *addrspec = NULL, *fname;
+ 
+   err = wks_fname_from_userid (userid, 1, &fname, &addrspec);
+   if (err)
+-    return err;
++    {
++      xfree (addrspec);
++      return err;
++    }
+ 
+   es_printf ("%s %s\n", fname, addrspec);
+ 
+@@ -1211,12 +1214,15 @@ gpg_error_t
+ wks_cmd_print_wkd_url (const char *userid)
+ {
+   gpg_error_t err;
+-  char *addrspec, *fname;
++  char *addrspec = NULL, *fname;
+   char *domain;
+ 
+   err = wks_fname_from_userid (userid, 1, &fname, &addrspec);
+   if (err)
+-    return err;
++    {
++      xfree (addrspec);
++      return err;
++    }
+ 
+   domain = strchr (addrspec, '@');
+   if (domain)
+-- 
+2.30.2
+
+
+From 600fabd8268c765d45d48873e7a8610e6dae0966 Mon Sep 17 00:00:00 2001
+From: Jakub Jelen <jjelen@redhat.com>
+Date: Wed, 14 Apr 2021 15:59:12 +0200
+Subject: [PATCH GnuPG 17/19] scd: Use the same allocator to free memory
+
+* scd/command.c (cmd_getinfo): Use free instead of gcry_free to match
+  the original allocator
+
+--
+
+Signed-off-by: Jakub Jelen <jjelen@redhat.com>
+---
+ scd/command.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/scd/command.c b/scd/command.c
+index cb0dd379a..9d85c5a41 100644
+--- a/scd/command.c
++++ b/scd/command.c
+@@ -1832,7 +1832,8 @@ cmd_getinfo (assuan_context_t ctx, char *line)
+         rc = assuan_send_data (ctx, p, strlen (p));
+       else
+         rc = gpg_error (GPG_ERR_NO_DATA);
+-      xfree (p);
++      /* allocated by scd/ccid-driver.c which is not using x*alloc/gcry_* */
++      free (p);
+     }
+   else if (!strcmp (line, "deny_admin"))
+     rc = opt.allow_admin? gpg_error (GPG_ERR_GENERAL) : 0;
+-- 
+2.30.2

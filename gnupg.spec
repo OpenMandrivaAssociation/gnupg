@@ -10,7 +10,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.2.36
+Version:	2.3.7
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -21,27 +21,26 @@ Source1:	sysconfig-gnupg
 Patch0:		gnupg-2.2.32-conditions-user-sddm.patch
 
 # (tpg) add patches from Fedora
-# fix handling of missing key usage on ocsp replies - upstream T1333
-Patch100:	gnupg-2.2.16-ocsp-keyusage.patch
 # allow 8192 bit RSA keys in keygen UI with large RSA
-Patch101:	gnupg-2.2.23-large-rsa.patch
+Patch9:		https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.23-large-rsa.patch
 # fix missing uid on refresh from keys.openpgp.org
 # https://salsa.debian.org/debian/gnupg2/commit/f292beac1171c6c77faf41d1f88c2e0942ed4437
-Patch102:	gnupg-2.2.18-tests-add-test-cases-for-import-without-uid.patch
-Patch103:	gnupg-2.2.18-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
-Patch104:	gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
+Patch20:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-tests-add-test-cases-for-import-without-uid.patch
+Patch21:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
+Patch22:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
+# Fixes for issues found in Coverity scan - reported upstream
+Patch30:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.21-coverity.patch
 
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
-BuildRequires:	hostname
 BuildRequires:	pkgconfig(libgcrypt)
 BuildRequires:	pkgconfig(libassuan) >= 2.4.3
 BuildRequires:	pkgconfig(ksba) >= 1.0.2
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	npth-devel >= 1.0
 BuildRequires:	docbook-utils
-BuildRequires:	readline-devel
+BuildRequires:	pkgconfig(readline)
 BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
