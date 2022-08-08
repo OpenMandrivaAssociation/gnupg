@@ -48,6 +48,7 @@ BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	locales-extra-charsets
 Recommends:	pinentry
 # This used to be a required separate package; it has been
 # merged into gnupg upstream in 2.1.0
