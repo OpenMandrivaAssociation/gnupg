@@ -132,6 +132,8 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_bindir}/dirmngr-client
 %{_bindir}/g13
 %{_bindir}/gpg-agent
+%{_bindir}/gpg-card
+%{_bindir}/gpg-wks-client
 %{_bindir}/gpg-wks-server
 %{_bindir}/gpgconf
 %{_bindir}/gpgsplit
@@ -148,9 +150,11 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_sbindir}/g13-syshelp
 %{_libexecdir}/dirmngr_ldap
 %{_libexecdir}/gpg-check-pattern
+%{_libexecdir}/gpg-pair-tool
 %{_libexecdir}/gpg-preset-passphrase
 %{_libexecdir}/gpg-protect-tool
 %{_libexecdir}/gpg-wks-client
+%{_libexecdir}/keyboxd
 %{_libexecdir}/scdaemon
 
 %files doc
@@ -161,6 +165,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_infodir}/gnupg.info*
 %{_mandir}/man1/dirmngr-client.1*
 %{_mandir}/man1/gpg-agent.1*
+%{_mandir}/man1/gpg-card.1*
 %{_mandir}/man1/gpg-check-pattern.1*
 %{_mandir}/man1/gpg-connect-agent.1*
 %{_mandir}/man1/gpg-preset-passphrase.1*
