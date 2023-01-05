@@ -26,10 +26,14 @@ Patch9:		https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.23-la
 # fix missing uid on refresh from keys.openpgp.org
 # https://salsa.debian.org/debian/gnupg2/commit/f292beac1171c6c77faf41d1f88c2e0942ed4437
 Patch20:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-tests-add-test-cases-for-import-without-uid.patch
-Patch21:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
+Patch21:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.4.0-gpg-allow-import-of-previously-known-keys-even-without-UI.patch
 Patch22:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
 # Fixes for issues found in Coverity scan - reported upstream
 Patch30:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.21-coverity.patch
+    
+# fix gpgme tests fail for in-source-tree builds (https://dev.gnupg.org/T6313)
+# (edited to patch Makefile.in instead of Makefile.am to avoid autoreconf)
+Patch31:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.4.0-tests-Fix-tests-gpgme-for-in-source-tree-builds.patch
 
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
