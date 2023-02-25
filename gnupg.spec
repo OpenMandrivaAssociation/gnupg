@@ -11,7 +11,7 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.4.0
-Release:	1
+Release:	2
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
@@ -19,6 +19,9 @@ Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
 Source1:	sysconfig-gnupg
 # (tpg) do not run under sddm user
 Patch0:		gnupg-2.2.32-conditions-user-sddm.patch
+# (tpg) do not wait couple of minutes, just display pinentry as soon as possible
+# https://bugs.kde.org/show_bug.cgi?id=458085
+Patch1:		gnupg-2.4.0-display-password-prompt-immediately.patch
 
 # (tpg) add patches from Fedora
 # allow 8192 bit RSA keys in keygen UI with large RSA
