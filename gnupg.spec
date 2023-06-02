@@ -6,23 +6,14 @@
 
 %global optflags %{optflags} -O3
 
-%bcond_without gpgagentscript
-
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.4.1
+Version:	2.4.2
 Release:	1
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
 Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
-Source1:	sysconfig-gnupg
-# (tpg) do not run under sddm user
-Patch0:		gnupg-2.2.32-conditions-user-sddm.patch
-# (tpg) do not wait couple of minutes, just display pinentry as soon as possible
-# https://bugs.kde.org/show_bug.cgi?id=458085
-Patch1:		gnupg-2.4.0-display-password-prompt-immediately.patch
-
 # (tpg) add patches from Fedora
 # allow 8192 bit RSA keys in keygen UI with large RSA
 Patch9:		https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.23-large-rsa.patch
@@ -33,10 +24,6 @@ Patch21:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.4.0-gpg
 Patch22:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gpg-accept-subkeys-with-a-good-revocation-but-no-self-sig.patch
 # Fixes for issues found in Coverity scan - reported upstream
 Patch30:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.21-coverity.patch
-    
-# fix gpgme tests fail for in-source-tree builds (https://dev.gnupg.org/T6313)
-# (edited to patch Makefile.in instead of Makefile.am to avoid autoreconf)
-Patch31:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.4.0-tests-Fix-tests-gpgme-for-in-source-tree-builds.patch
 
 BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
@@ -104,19 +91,6 @@ rm -f gpg-agent-info
 %install
 %make_install
 
-#Remove: #60298
-%if %{with gpgagentscript}
-install -d %{buildroot}/%{_sysconfdir}/sysconfig
-install %{SOURCE1} %{buildroot}/%{_sysconfdir}/sysconfig/%{name}
-
-# (tpg) enable gpg-agent in userland
-mkdir -p %{buildroot}%{_userunitdir}/sockets.target.wants
-cp -a  doc/examples/systemd-user/*.{socket,service} %{buildroot}%{_userunitdir}
-for i in dirmngr.socket gpg-agent-browser.socket gpg-agent-extra.socket gpg-agent.socket; do
-    ln -sf %{_userunitdir}/$i %{buildroot}%{_userunitdir}/sockets.target.wants/$i
-done
-%endif
-
 mkdir -p %{buildroot}%{_sysconfdir}/dirmngr
 mkdir -p %{buildroot}%{_sysconfdir}/dirmngr/trusted-certs
 mkdir -p %{buildroot}%{_var}/run/dirmngr
@@ -126,12 +100,6 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %find_lang %{name}2
 
 %files -f %{name}2.lang
-%if %{with gpgagentscript}
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%{_userunitdir}/*.service
-%{_userunitdir}/*.socket
-%{_userunitdir}/sockets.target.wants/*.socket
-%endif
 %attr(4755,root,root) %{_bindir}/gpgsm
 %dir %{_sysconfdir}/dirmngr
 %dir %{_sysconfdir}/dirmngr/trusted-certs

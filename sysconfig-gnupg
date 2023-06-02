@@ -1,2 +1,0 @@
-# (tpg) set default parameters for gpg-agent.service
-GPGAGENT_PARAMS=""
