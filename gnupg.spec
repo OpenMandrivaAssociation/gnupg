@@ -76,6 +76,7 @@ Documentation and manuals for %{name}.
 
 %make_build
 
+%if ! %{cross_compiling}
 # only 4 tests fails on i586
 %ifnarch %{ix86}
 %check
@@ -86,6 +87,7 @@ sed -i -e "s/tofu.scm//" tests/openpgp/Makefile*
 make check
 [[ -a gpg-agent-info ]] && kill -0 $(cut -d: -f 2 gpg-agent-info)
 rm -f gpg-agent-info
+%endif
 %endif
 
 %install
