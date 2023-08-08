@@ -9,11 +9,11 @@
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
 Version:	2.4.3
-Release:	1
+Release:	2
 License:	GPLv3
 Group:		File tools
 URL:		http://www.gnupg.org
-Source0:	ftp://ftp.gnupg.org/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
+Source0:	https://www.gnupg.org/ftp/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
 # (tpg) add patches from Fedora
 # allow 8192 bit RSA keys in keygen UI with large RSA
 Patch9:		https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.23-large-rsa.patch
@@ -25,7 +25,7 @@ Patch22:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gp
 # Fixes for issues found in Coverity scan - reported upstream
 Patch30:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.21-coverity.patch
 
-BuildRequires:	openldap-devel
+BuildRequires:	pkgconfig(ldap)
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
 BuildRequires:	pkgconfig(libgcrypt)
