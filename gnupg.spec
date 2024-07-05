@@ -4,11 +4,14 @@
 
 %define pkgname gnupg
 
-%global optflags %{optflags} -O3
+# Building with _FORTIFY_SOURCE (which is on the default flags)
+# results in test failures because of fd_sets allocated on the
+# heap. Those are false positives.
+%global optflags %{optflags} -O3 -U_FORTIFY_SOURCE
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.4.5
+Version:	2.5.0
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -110,7 +113,9 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_bindir}/dirmngr-client
 %{_bindir}/g13
 %{_bindir}/gpg-agent
+%{_bindir}/gpg-authcode-sign.sh
 %{_bindir}/gpg-card
+%{_bindir}/gpg-mail-tube
 %{_bindir}/gpg-wks-client
 %{_bindir}/gpg-wks-server
 %{_bindir}/gpgconf
@@ -148,6 +153,7 @@ mkdir -p %{buildroot}%{_var}/lib/dirmngr/extra-certs
 %{_mandir}/man1/gpg-card.1*
 %{_mandir}/man1/gpg-check-pattern.1*
 %{_mandir}/man1/gpg-connect-agent.1*
+%{_mandir}/man1/gpg-mail-tube.1*
 %{_mandir}/man1/gpg-preset-passphrase.1*
 %{_mandir}/man1/gpg-wks-server.1*
 %{_mandir}/man1/gpg-wks-client.1*
