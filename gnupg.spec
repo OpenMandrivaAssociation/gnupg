@@ -15,7 +15,7 @@ Version:	2.5.0
 Release:	1
 License:	GPLv3
 Group:		File tools
-URL:		http://www.gnupg.org
+URL:		https://www.gnupg.org
 Source0:	https://www.gnupg.org/ftp/gcrypt/gnupg/%{pkgname}-%{version}.tar.bz2
 # (tpg) add patches from Fedora
 # allow 8192 bit RSA keys in keygen UI with large RSA
