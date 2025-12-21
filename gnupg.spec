@@ -28,6 +28,11 @@ Patch22:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.18-gp
 # Fixes for issues found in Coverity scan - reported upstream
 Patch30:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.21-coverity.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(ldap)
 BuildRequires:	sendmail-command
 BuildRequires:	pkgconfig(gpg-error) >= 1.24
