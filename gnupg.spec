@@ -11,7 +11,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.5.18
+Version:	2.5.20
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -30,7 +30,6 @@ Patch30:	https://src.fedoraproject.org/rpms/gnupg2/raw/rawhide/f/gnupg-2.2.21-co
 
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	libtool-base
 BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	pkgconfig(ldap)
