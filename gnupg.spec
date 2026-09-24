@@ -11,7 +11,7 @@
 
 Summary:	GNU privacy guard - a free PGP replacement
 Name:		gnupg
-Version:	2.5.23
+Version:	2.5.24
 Release:	1
 License:	GPLv3
 Group:		File tools
@@ -34,18 +34,17 @@ BuildRequires:	slibtool
 BuildRequires:	make
 BuildRequires:	pkgconfig(ldap)
 BuildRequires:	sendmail-command
-BuildRequires:	pkgconfig(gpg-error) >= 1.24
-BuildRequires:	pkgconfig(libgcrypt)
-BuildRequires:	pkgconfig(libassuan) >= 2.4.3
-BuildRequires:	pkgconfig(ksba) >= 1.0.2
+BuildRequires:	pkgconfig(gpg-error) >= 1.56
+BuildRequires:	pkgconfig(libgcrypt) >= 1.12.0
+BuildRequires:	pkgconfig(libassuan) >= 3.0.0
+BuildRequires:	pkgconfig(ksba) >= 1.6.3
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	npth-devel >= 1.0
+BuildRequires:	npth-devel >= 1.2
 BuildRequires:	docbook-utils
 BuildRequires:	pkgconfig(readline)
 BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libusb)
-BuildRequires:	pkgconfig(gpg-error)
 BuildRequires:	pkgconfig(gnutls)
 BuildRequires:	pkgconfig(bzip2)
 BuildRequires:	pkgconfig(sqlite3)
